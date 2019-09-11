@@ -96,6 +96,7 @@ static int cmd_si(char *args){
 	
 	/* check N */
 	//if (N==5) {return -1;}
+	if (N==0) printf("Invalid command\n");
 	cpu_exec(N);
 	return 0;
 }
