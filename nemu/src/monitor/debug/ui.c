@@ -41,6 +41,8 @@ static int cmd_si(char *args);
 
 static int cmd_help(char *args);
 
+static int cmd_info(char *args);
+
 static struct {
   char *name;
   char *description;
@@ -49,7 +51,8 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si","Step N instruction exactly",cmd_si }
+  { "si","Step N instruction exactly",cmd_si },
+  { "info","info r	print register\n",cmd_info }
 
   /* TODO: Add more commands */
 
@@ -98,6 +101,15 @@ static int cmd_si(char *args){
 	//if (N==5) {return -1;}
 	if (N==0) printf("Invalid command\n");
 	cpu_exec(N);
+	return 0;
+}
+
+void isa_reg_display();
+
+static int cmd_info(char *args){
+	char *arg=strtok(NULL," ");
+	if( strcmp(arg,"r")==0 )  isa_reg_display();
+	else printf("Unknown command\n");
 	return 0;
 }
 

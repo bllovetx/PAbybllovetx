@@ -41,7 +41,20 @@ void reg_test() {
 }
 
 void isa_reg_display() {
+	int index=0,width=1;
+	while( width<=4 ){
+		switch( width ){
+			case 1:printf("%s:  %8xH\t",reg_name(index,width),reg_b(index));break;
+			case 2:printf("%s:  %8xH\t",reg_name(index,width),reg_w(index));break;
+			case 4:printf("%s: %8xH\t",reg_name(index,width),reg_l(index));break;
+		}
+		index++;
+		if( !(index&0x3) ) printf("\n");
+		if( index/8 ) width*=2;
+		index%=8;
+	}
 }
+
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
   return 0;
