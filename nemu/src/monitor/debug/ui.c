@@ -43,6 +43,8 @@ static int cmd_help(char *args);
 
 static int cmd_info(char *args);
 
+static int cmd_x(char *args);
+
 static struct {
   char *name;
   char *description;
@@ -52,7 +54,8 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si","Step N instruction exactly",cmd_si },
-  { "info","info r	print register\n",cmd_info }
+  { "info","info r	print register\n",cmd_info },
+  { "x","scan memory",cmd_x}
 
   /* TODO: Add more commands */
 
@@ -104,12 +107,33 @@ static int cmd_si(char *args){
 	return 0;
 }
 
+/* related to isa */
 void isa_reg_display();
 
 static int cmd_info(char *args){
+	/* extract first argument */
 	char *arg=strtok(NULL," ");
+	/* case r: info all regs */
 	if( strcmp(arg,"r")==0 )  isa_reg_display();
 	else printf("Unknown command\n");
+	return 0;
+}
+
+/* scan memory */
+static int cmd_x(char *args){
+	unsigned int n,addr;
+	sscanf(args,"%u 0x%x",&n,&addr);
+	unsigned int addr_pmem=addr-IMAGE_START;
+	unsigned int num=0;
+	printf("0x%x:	",addr);
+	while( num<n ){
+		if( (num%4==0)&&(num!=0) ) printf("\n0x%x:	",addr);
+		printf("0x%x%x%x%x	",pmem[addr_pmem+3],pmem[addr_pmem+2],pmem[addr_pmem+1],pmem[addr_pmem]);
+		num++;
+		addr+=4;
+		addr_pmem+=4;
+	}
+	printf("\n");
 	return 0;
 }
 
