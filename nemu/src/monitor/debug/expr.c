@@ -6,8 +6,11 @@
 #include <sys/types.h>
 #include <regex.h>
 
+uint32_t eval(int p,int q);
+	
+
 enum {
-  TK_NOTYPE = 256, TK_EQ
+  TK_NOTYPE = 256, TK_EQ,TK_DEX,TK_HEX
 
   /* TODO: Add more token types */
 
@@ -24,7 +27,15 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
-  {"==", TK_EQ}         // equal
+  {"==", TK_EQ},         // equal
+  {"\\*", '*'},         //multiply
+  {"-", '-'},           //sub
+  {"/", '/'},			//div
+  {"\\(", '('},			//bra
+  {"\\)", ')'},			//ket
+  {"[0-9]+",TK_DEX},	//dex
+  {"0x[0-9,a-f,A-F]{6,8}",TK_HEX}	//hex
+  
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -80,9 +91,20 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-          default: TODO();
+			case '+':tokens[nr_token].type='+';nr_token++;break;
+			case '-':tokens[nr_token].type='-';nr_token++;break;
+			case '*':tokens[nr_token].type='*';nr_token++;break;
+			case '/':tokens[nr_token].type='/';nr_token++;break;
+			case '(':tokens[nr_token].type='(';nr_token++;break;
+			case ')':tokens[nr_token].type=')';nr_token++;break;
+			case TK_HEX:tokens[nr_token].type=TK_HEX;
+						strnpy(tokens[nr_token].str,substr_start,substr_len);
+						nr_token++;break;
+			case TK_DEX:tokens[nr_token].type=TK_DEX;
+						strnpy(tokens[nr_token].str,substr_start,substr_len);
+						nr_token++;break;
+			default: break; 
         }
-
         break;
       }
     }
@@ -96,6 +118,20 @@ static bool make_token(char *e) {
   return true;
 }
 
+uint32_t eval(int p,int q){
+	if( p>q ){
+		//bad expr
+	}
+	else if( p==q ){
+	}
+	else if( check_parentheses(p,q)==true ){
+		return eval(p+1,q-1);
+	}
+	else{
+	}
+}
+
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
@@ -103,7 +139,6 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  return eval(0,nr_token-1); 
 
-  return 0;
 }
