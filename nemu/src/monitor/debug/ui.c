@@ -137,8 +137,10 @@ static int cmd_x(char *args){
 
 /* print memory--not finished */
 static int cmd_p(char *args){
-    bool *success=false;//need initailize
-	return expr(args,success);
+    bool success=true;//need initailize
+	uint32_t expr_result=expr(args,&success);
+	if(success)printf("%d\n",expr_result);
+	return 0;
 }
 
 void ui_mainloop(int is_batch_mode) {

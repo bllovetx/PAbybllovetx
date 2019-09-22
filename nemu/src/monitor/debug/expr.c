@@ -118,20 +118,66 @@ static bool make_token(char *e) {
   return true;
 }
 
+bool check_parentheses(int p,int q){
+	int ch_p=-1;
+	for(int i=p;i<q;i++){
+		switch( tokens[i].type ){
+			case '(':ch_p++;break;
+			case ')':ch_p--;break;
+			default :break;
+		}
+		if( ch_p<0 ) return false;
+	}
+	assert(tokens[q].type==')');
+	return true;
+}
+
 uint32_t eval(int p,int q){
 	if( p>q ){
+		/* bad expr */
+		printf("Unvalid Expression\n");
+		assert(0);
 		return 0;
-		//bad expr
 	}
 	else if( p==q ){
-		return 0;
+		uint32_t str_scan;
+		switch( tokens[p].type ){
+			case TK_HEX:sscanf(tokens[p].str,"%x",&str_scan);break;
+			case TK_DEX:sscanf(tokens[p].str,"%d",&str_scan);break;
+			default:assert(0);
+		}
+		return str_scan;
 	}
-	//else if( check_parentheses(p,q)==true ){
-	//	return eval(p+1,q-1);
-	//}
+	else if( check_parentheses(p,q)==true ){
+		return eval(p+1,q-1);
+	}
 	else{
-		printf("success!");
-		return 0;
+		int fd_main=-1,m_op=-1;
+		for(int i=p;i<=q;i++){
+			switch( tokens[i].type ){
+				case '(':fd_main++;break;
+				case ')':fd_main--;break;
+				case '+':if(fd_main<0&&m_op<0){m_op=i;};break;
+				case '-':if(fd_main<0&&m_op<0){m_op=i;};break;
+				case '*':if(fd_main<0){m_op=i;};break;
+				case '/':if(fd_main<0){m_op=i;};break;
+				default :break;
+			}
+		}
+		assert(p<m_op&&m_op<q);
+		assert(m_op!=-1);
+		uint32_t left_main=eval(p,m_op-1),right_main=eval(m_op+1,q);
+		switch( tokens[m_op].type ){
+			case '+':return left_main+right_main;break;
+			case '-':return left_main-right_main;break;
+			case '*':return left_main*right_main;break;
+			case '/':
+					if( right_main==0 )printf("Unvalid Expression");
+					assert(right_main!=0);
+					return left_main/right_main;break;
+			default :assert(0);break;
+		}
+
 	}
 }
 
