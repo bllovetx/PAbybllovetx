@@ -139,7 +139,20 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
     bool success=true;//need initailize
 	uint32_t expr_result=expr(args,&success);
-	if(success)printf("%d\n",expr_result);
+	if(success){
+		unsigned int n=1,addr=expr_result;
+		unsigned int addr_pmem=addr-IMAGE_START;
+		unsigned int num=0;
+		printf("0x%x:	",addr);
+		while( num<n ){
+			if( (num%4==0)&&(num!=0) ) printf("\n0x%x:	",addr);
+			printf("0x%x%x%x%x	",pmem[addr_pmem+3],pmem[addr_pmem+2],pmem[addr_pmem+1],pmem[addr_pmem]);
+			num++;
+			addr+=4;
+			addr_pmem+=4;
+		}
+		printf("\n");
+	}
 	return 0;
 }
 
