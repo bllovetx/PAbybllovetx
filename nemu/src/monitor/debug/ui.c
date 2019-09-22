@@ -87,7 +87,7 @@ static int cmd_help(char *args) {
 static int cmd_si(char *args){
 	/* get number of steps N*/
 	
-	printf("%x%x\n",pmem[0],pmem[1]);
+	printf("%x%x%x%x\n",pmem[0],pmem[1],pmem[2],pmem[3]);
 	char *arg =strtok(NULL," ");
 	int N;
 
