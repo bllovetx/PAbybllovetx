@@ -122,6 +122,7 @@ static int cmd_x(char *args){
 	unsigned int n,addr;
 	sscanf(args,"%u 0x%x",&n,&addr);
 	unsigned int addr_pmem=addr-IMAGE_START;
+	printf("%x\n",addr_pmem);
 	unsigned int num=0;
 	printf("0x%x:	",addr);
 	while( num<n ){
