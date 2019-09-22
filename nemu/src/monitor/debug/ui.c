@@ -126,7 +126,7 @@ static int cmd_x(char *args){
 	printf("0x%x:	",addr);
 	while( num<n ){
 		if( (num%4==0)&&(num!=0) ) printf("\n0x%x:	",addr);
-		printf("0x%x%x%x%x	",pmem[addr_pmem+3],pmem[addr_pmem+2],pmem[addr_pmem+1],pmem[addr_pmem]);
+		printf("0x%2x%2x%2x%2x	",pmem[addr_pmem+3],pmem[addr_pmem+2],pmem[addr_pmem+1],pmem[addr_pmem]);
 		num++;
 		addr+=4;
 		addr_pmem+=4;
@@ -146,13 +146,13 @@ static int cmd_p(char *args){
 		printf("0x%x:	",addr);
 		while( num<n ){
 			if( (num%4==0)&&(num!=0) ) printf("\n0x%x:	",addr);
-			printf("0x%x%x%x%x	",pmem[addr_pmem+3],pmem[addr_pmem+2],pmem[addr_pmem+1],pmem[addr_pmem]);
+			printf("0x%2x%2x%2x%2x	",pmem[addr_pmem+3],pmem[addr_pmem+2],pmem[addr_pmem+1],pmem[addr_pmem]);
 			num++;
 			addr+=4;
 			addr_pmem+=4;
-		}
+	 	}
 		printf("\n");
-	}
+	} 
 	return 0;
 }
 
