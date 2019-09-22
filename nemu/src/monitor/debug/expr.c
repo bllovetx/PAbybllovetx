@@ -99,10 +99,10 @@ static bool make_token(char *e) {
 			case ')':tokens[nr_token].type=')';nr_token++;break;
 			case TK_HEX:tokens[nr_token].type=TK_HEX;
 						strncpy(tokens[nr_token].str,substr_start,substr_len);
-						nr_token++;break;
+						tokens[nr_token].str[substr_len]='\0';nr_token++;break;
 			case TK_DEX:tokens[nr_token].type=TK_DEX;
 						strncpy(tokens[nr_token].str,substr_start,substr_len);
-						nr_token++;break;
+						tokens[nr_token].str[substr_len]='\0';nr_token++;break;
 			default: break; 
         }
         break;
@@ -167,7 +167,7 @@ uint32_t eval(int p,int q){
 		assert(p<m_op&&m_op<q);
 		assert(m_op!=-1);
 		uint32_t left_main=eval(p,m_op-1),right_main=eval(m_op+1,q);
-		printf("%d%d",left_main,right_main);
+		printf("%d\n%d\n",left_main,right_main);
 		switch( tokens[m_op].type ){
 			case '+':return left_main+right_main;break;
 			case '-':return left_main-right_main;break;
