@@ -10,7 +10,7 @@ uint32_t eval(int p,int q);
 	
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_DEX,TK_HEX
+  TK_NOTYPE = 256, TK_EQ,TK_HEX,TK_DEX
 
   /* TODO: Add more token types */
 
@@ -33,8 +33,8 @@ static struct rule {
   {"/", '/'},			//div
   {"\\(", '('},			//bra
   {"\\)", ')'},			//ket
-  {"[0-9]+",TK_DEX},	//dex
-  {"0x[0-9,a-f,A-F]{6,8}",TK_HEX}	//hex
+  {"0x[0-9,a-f,A-F]{6,8}",TK_HEX},	//hex
+  {"[0-9]+",TK_DEX}		//dex
   
 };
 
