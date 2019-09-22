@@ -38,12 +38,10 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_si(char *args);
-
 static int cmd_help(char *args);
-
 static int cmd_info(char *args);
-
 static int cmd_x(char *args);
+static int cmd_p(char *args);
 
 static struct {
   char *name;
@@ -55,8 +53,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si","Step N instruction exactly",cmd_si },
   { "info","info r	print register\n",cmd_info },
-  { "x","scan memory",cmd_x}
-
+  { "x","scan memory",cmd_x},
+  { "p","print memory",cmd_p}
   /* TODO: Add more commands */
 
 };
@@ -135,6 +133,12 @@ static int cmd_x(char *args){
 	}
 	printf("\n");
 	return 0;
+}
+
+/* print memory--not finished */
+static int cmd_p(char *args){
+    bool *success=false;//need initailize
+	return expr(args,success);
 }
 
 void ui_mainloop(int is_batch_mode) {

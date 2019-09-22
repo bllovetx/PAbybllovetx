@@ -98,10 +98,10 @@ static bool make_token(char *e) {
 			case '(':tokens[nr_token].type='(';nr_token++;break;
 			case ')':tokens[nr_token].type=')';nr_token++;break;
 			case TK_HEX:tokens[nr_token].type=TK_HEX;
-						strnpy(tokens[nr_token].str,substr_start,substr_len);
+						strncpy(tokens[nr_token].str,substr_start,substr_len);
 						nr_token++;break;
 			case TK_DEX:tokens[nr_token].type=TK_DEX;
-						strnpy(tokens[nr_token].str,substr_start,substr_len);
+						strncpy(tokens[nr_token].str,substr_start,substr_len);
 						nr_token++;break;
 			default: break; 
         }
@@ -120,14 +120,18 @@ static bool make_token(char *e) {
 
 uint32_t eval(int p,int q){
 	if( p>q ){
+		return 0;
 		//bad expr
 	}
 	else if( p==q ){
+		return 0;
 	}
-	else if( check_parentheses(p,q)==true ){
-		return eval(p+1,q-1);
-	}
+	//else if( check_parentheses(p,q)==true ){
+	//	return eval(p+1,q-1);
+	//}
 	else{
+		printf("success!");
+		return 0;
 	}
 }
 
