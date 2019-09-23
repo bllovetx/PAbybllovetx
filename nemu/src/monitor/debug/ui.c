@@ -146,8 +146,8 @@ static int cmd_p(char *args){
 		printf("0x%x:	",addr);
 		while( num<n ){
 			assert( 0x100000<=addr && addr<=0x80100000 );
-			if( (num%4==0)&&(num!=0) ) printf("\n0x%x:	",addr);
-			printf("0x%80x	",vaddr_read(addr,4));
+			if( (num%4==0)&&(num!=0) ) printf("\n0x%08x:	",addr);
+			printf("0x%08x	",vaddr_read(addr,4));
 			num++;
 			addr+=4;
 	  	}
