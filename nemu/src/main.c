@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
 	  unsigned result;
 	  char code_input[65536];
 	  fscanf(fp,"%u %s\n",&result,code_input);
+	  printf("%s\n",code_input);
 	  bool success=true;
 	  uint32_t expr_result=expr(code_input,&success);
 	  assert(result==expr_result);
