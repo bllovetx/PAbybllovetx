@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 	  fscanf(fp,"%u %[^\n]",&result,code_input);
 	  bool success=true;
 	  uint32_t expr_result=expr(code_input,&success);
-	  printf("%d: %s\n%u",i,code_input,expr_result);
+	  printf("%d: %s\n%u\n",i,code_input,expr_result);
 	  assert(result==expr_result);
   }
 
