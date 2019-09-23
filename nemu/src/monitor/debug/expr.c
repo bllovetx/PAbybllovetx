@@ -152,15 +152,15 @@ uint32_t eval(int p,int q){
 		return eval(p+1,q-1);
 	}
 	else{
-		int fd_main=-1,m_op=-1;
+		int fd_main=-1,m_op=-1,op_pre=-1;
 		for(int i=p;i<=q;i++){
 			switch( tokens[i].type ){
 				case '(':fd_main++;break;
 				case ')':fd_main--;break;
-				case '+':if(fd_main<0){m_op=i;};break;
-				case '-':if(fd_main<0){m_op=i;};break;
-				case '*':if(fd_main<0&&m_op<0){m_op=i;};break;
-				case '/':if(fd_main<0&&m_op<0){m_op=i;};break;
+				case '+':if(fd_main<0){m_op=i;op_pre++;};break;
+				case '-':if(fd_main<0){m_op=i;op_pre++;};break;
+				case '*':if(fd_main<0&&op_pre<0){m_op=i;};break;
+				case '/':if(fd_main<0&&op_pre<0){m_op=i;};break;
 				default :break;
 			}
 		}
