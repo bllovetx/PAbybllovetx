@@ -15,7 +15,8 @@ int main(int argc, char *argv[]) {
   int is_batch_mode = init_monitor(argc, argv);
 
   /* Test regex */
-  FILE *fp = fopen("~/ics2019/nemu/tools/gen-expr/input","r");
+  FILE *fp = fopen("/home/bllovetx/ics2019/nemu/tools/gen-expr/input","r");
+
   assert(fp!=NULL);
   for(int i=0;i<100;i++){
 	  unsigned result;
