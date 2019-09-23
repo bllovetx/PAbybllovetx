@@ -123,10 +123,10 @@ static int cmd_x(char *args){
 	unsigned int n,addr;
 	sscanf(args,"%u 0x%x",&n,&addr);
 	unsigned int num=0;
-	printf("0x%x:	",addr);
+	printf("0x%08x:	",addr);
 	while( num<n ){
 		assert( 0x100000<=addr && addr<=0x80100000 );
-		if( (num%4==0)&&(num!=0) ) printf("\n0x%x:	",addr);
+		if( (num%4==0)&&(num!=0) ) printf("\n0x%08x:	",addr);
 		printf("0x%08x	",vaddr_read(addr,4));
 		num++;
 		addr+=4;
@@ -143,7 +143,7 @@ static int cmd_p(char *args){
 		unsigned int n=1,addr=expr_result;
 		//printf("%#x\n",addr);
 		unsigned int num=0;
-		printf("0x%x:	",addr);
+		printf("0x%08x:	",addr);
 		while( num<n ){
 			assert( 0x100000<=addr && addr<=0x80100000 );
 			if( (num%4==0)&&(num!=0) ) printf("\n0x%08x:	",addr);
