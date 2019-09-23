@@ -157,17 +157,17 @@ uint32_t eval(int p,int q){
 			switch( tokens[i].type ){
 				case '(':fd_main++;break;
 				case ')':fd_main--;break;
-				case '+':if(fd_main<0&&m_op<0){m_op=i;};break;
-				case '-':if(fd_main<0&&m_op<0){m_op=i;};break;
-				case '*':if(fd_main<0){m_op=i;};break;
-				case '/':if(fd_main<0){m_op=i;};break;
+				case '+':if(fd_main<0){m_op=i;};break;
+				case '-':if(fd_main<0){m_op=i;};break;
+				case '*':if(fd_main<0&&m_op<0){m_op=i;};break;
+				case '/':if(fd_main<0&&m_op<0){m_op=i;};break;
 				default :break;
 			}
 		}
 		assert(p<m_op&&m_op<q);
 		assert(m_op!=-1);
 		uint32_t left_main=eval(p,m_op-1),right_main=eval(m_op+1,q);
-		printf("%d	%d\n",left_main,right_main);
+		//printf("%d	%d\n",left_main,right_main);
 		switch( tokens[m_op].type ){
 			case '+':return left_main+right_main;break;
 			case '-':return left_main-right_main;break;
