@@ -140,15 +140,13 @@ static int cmd_p(char *args){
 	uint32_t expr_result=expr(args,&success);
 	if(success){
 		unsigned int n=1,addr=expr_result;
-		unsigned int addr_pmem=addr-IMAGE_START;
 		unsigned int num=0;
 		printf("0x%x:	",addr);
 		while( num<n ){
 			if( (num%4==0)&&(num!=0) ) printf("\n0x%x:	",addr);
-			printf("0x%02x%02x%02x%02x	",pmem[addr_pmem+3],pmem[addr_pmem+2],pmem[addr_pmem+1],pmem[addr_pmem]);
+			printf("0x%80x	",vaddr_read(addr,4));
 			num++;
 			addr+=4;
-			addr_pmem+=4;
 	  	}
 		printf("\n");
 	}  
