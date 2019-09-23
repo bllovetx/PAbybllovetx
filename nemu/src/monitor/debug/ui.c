@@ -141,7 +141,7 @@ static int cmd_p(char *args){
 	uint32_t expr_result=expr(args,&success);
 	if(success){
 		unsigned int n=1,addr=expr_result;
-		printf("%#x\n",addr);
+		//printf("%#x\n",addr);
 		unsigned int num=0;
 		printf("0x%x:	",addr);
 		while( num<n ){
