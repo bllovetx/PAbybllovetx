@@ -44,9 +44,9 @@ void isa_reg_display() {
 	int index=0,width=1;
 	while( width<=4 ){
 		switch( width ){
-			case 1:printf("%s:  %8xH\t",reg_name(index,width),reg_b(index));break;
-			case 2:printf("%s:  %8xH\t",reg_name(index,width),reg_w(index));break;
-			case 4:printf("%s: %8xH\t",reg_name(index,width),reg_l(index));break;
+			case 1:printf("%s:        %02xH\t",reg_name(index,width),reg_b(index));break;
+			case 2:printf("%s:      %04xH\t",reg_name(index,width),reg_w(index));break;
+			case 4:printf("%s: %08xH\t",reg_name(index,width),reg_l(index));break;
 		}
 		index++;
 		if( !(index&0x3) ) printf("\n");
