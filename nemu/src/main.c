@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 	  bool success=true;
 	  uint32_t expr_result=expr(code_input,&success);
 	  printf("%d: %s\n%u\n",i,code_input,expr_result);
-	  assert(result==expr_result);
+	  assert(result==expr_result||result==0);
   }
 
 
