@@ -33,7 +33,7 @@ static struct rule {
   {"/", '/'},			//div
   {"\\(", '('},			//bra
   {"\\)", ')'},			//ket
-  {"0x[0-9,a-f,A-F]{6,8}",TK_HEX},	//hex
+  {"0x[0-9,a-f,A-F]+",TK_HEX},	//hex
   {"[0-9]+",TK_DEX}		//dex
   
 };
