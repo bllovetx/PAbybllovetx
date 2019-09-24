@@ -10,11 +10,22 @@ uint32_t eval(int p,int q);
 	
 /* enum can be used as previlige */
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_NEQ,TK_AND,TK_OR,TK_HEX,TK_DEX
+  TK_NOTYPE = 256, TK_EQ,TK_NEQ,TK_AND,TK_OR,TK_HEX,TK_DEX,DEREF
 
   /* TODO: Add more token types */
 
 };
+#define p_t(type) privilege(type)+1
+int privilege(int type){
+	switch(type){
+		case DEREF:return 1;
+		case '*':case '/':return p_t(DEREF);
+		case '+':case '-':return p_t('*');
+		case TK_EQ:case TK_NEQ:return p_t('+');
+		case TK_AND:case TK_OR:return p_t(TK_EQ);
+		default:return 0;
+	}
+}	
 
 static struct rule {
   char *regex;
@@ -195,7 +206,7 @@ uint32_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   } 
-  printf("%d	%d\n",TK_NOTYPE,TK_EQ);
+  printf("%d	%d\n",privilege(TK_NOTYPE),privilege(TK_EQ));
   /* TODO: Insert codes to evaluate the expression. */
   return eval(0,nr_token-1); 
 
