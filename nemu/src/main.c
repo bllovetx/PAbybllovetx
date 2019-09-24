@@ -1,11 +1,11 @@
-#include "monitor/monitor.h"
+/*#include "monitor/monitor.h"
 #include "monitor/expr.h"
 #include "monitor/watchpoint.h"
 #include "nemu.h"
 
 #include <stdlib.h>
 #include <readline/readline.h>
-#include <readline/history.h>
+#include <readline/history.h>*/
 
 int init_monitor(int, char *[]);
 void ui_mainloop(int);
@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
   int is_batch_mode = init_monitor(argc, argv);
 
   /* Test regex */
-  
+  /*
   FILE *fp = fopen("/home/bllovetx/ics2019/nemu/tools/gen-expr/input","r");
 
   assert(fp!=NULL);
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 	  printf("%d: %s\n%u\n",i,code_input,expr_result);
 	  assert(result==expr_result||result==0);
   }
-  
+  */
 
 
   /* Receive commands from user. */
