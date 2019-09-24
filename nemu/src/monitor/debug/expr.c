@@ -170,7 +170,7 @@ uint32_t eval(int p,int q){
 			case TK_HEX:sscanf(tokens[p].str,"%x",&str_scan);break;
 			case TK_DEX:sscanf(tokens[p].str,"%d",&str_scan);break;
 			case TK_REG:str_scan=isa_reg_str2val(tokens[p].str,&success);
-						if( !success ){assert(0);}break;
+						if( !success ){printf("Unvalid Register name");assert(0);}break;
 			default:assert(0);
 		} 
 		return str_scan;
