@@ -5,11 +5,11 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-
+uint32_t isa_reg_str2val(const char *s,bool *success);
 uint32_t eval(int p,int q);
 	
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_NEQ,TK_AND,TK_OR,TK_HEX,TK_DEX,DEREF
+  TK_NOTYPE = 256, TK_EQ,TK_NEQ,TK_AND,TK_OR,TK_HEX,TK_DEX,DEREF,TK_REG
 
   /* TODO: Add more token types */
 
@@ -49,6 +49,7 @@ static struct rule {
   {"/", '/'},			//div
   {"\\(", '('},			//bra
   {"\\)", ')'},			//ket
+  {"\\$[a-z,A-Z]{0,3}",TK_REG},	//register
   {"0x[0-9,a-f,A-F]+",TK_HEX},	//hex
   {"[0-9]+",TK_DEX}		//dex
   
@@ -123,6 +124,9 @@ static bool make_token(char *e) {
 			case TK_DEX:tokens[nr_token].type=TK_DEX;
 						strncpy(tokens[nr_token].str,substr_start,substr_len);
 						tokens[nr_token].str[substr_len]='\0';nr_token++;break;
+			case TK_REG:tokens[nr_token].type=TK_REG;
+						strncpy(tokens[nr_token].str,substr_start,substr_len);
+						tokens[nr_token].str[substr_len]='\0';nr_token++;break;
 			default: break; 
         }
         break;
@@ -161,9 +165,12 @@ uint32_t eval(int p,int q){
 	}
 	else if( p==q ){
 		uint32_t str_scan;
+		bool success=true;
 		switch( tokens[p].type ){
 			case TK_HEX:sscanf(tokens[p].str,"%x",&str_scan);break;
 			case TK_DEX:sscanf(tokens[p].str,"%d",&str_scan);break;
+			case TK_REG:str_scan=isa_reg_str2val(tokens[p].str,&success);
+						if( !success ){assert(0);}break;
 			default:assert(0);
 		} 
 		return str_scan;

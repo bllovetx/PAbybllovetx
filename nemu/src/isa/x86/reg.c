@@ -57,5 +57,6 @@ void isa_reg_display() {
 
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+	printf("%s\n",s);
+  return 0x100000;
 }
