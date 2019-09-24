@@ -77,5 +77,6 @@ uint32_t isa_reg_str2val(const char *s, bool *success) {
   for( int i=0;i<8;i++ ){if(strcmp(s_cap,regsl[i])==0)return reg_l(i);}
   for( int i=0;i<8;i++ ){if(strcmp(s_cap,regsw[i])==0)return reg_w(i);}
   for( int i=0;i<8;i++ ){if(strcmp(s_cap,regsb[i])==0)return reg_b(i);}
-  return 0x100000;
+  *success=false;
+  return 0;
 }
