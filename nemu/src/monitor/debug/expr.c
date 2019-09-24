@@ -186,7 +186,7 @@ uint32_t eval(int p,int q){
 						 break;
 			}
 		}
-		assert(p<=m_op&&m_op<q);
+		assert(p<m_op&&m_op<q);
 		assert(privilege(tokens[m_op].type)>1);
 		assert(m_op!=-1);
 		uint32_t left_main=eval(p,m_op-1),right_main=eval(m_op+1,q);
@@ -214,7 +214,10 @@ uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
-  }  
+  } 
+  for( int i=0;i<nr_token;i++ ){
+	 if( tokens[i].type=='*' && (i==0||p_token(i-1)>0) ){tokens[i].type=DEREF;}
+  }
   //printf("%d	%d\n",privilege(TK_NOTYPE),privilege(TK_EQ));
   /* TODO: Insert codes to evaluate the expression. */
   return eval(0,nr_token-1); 
