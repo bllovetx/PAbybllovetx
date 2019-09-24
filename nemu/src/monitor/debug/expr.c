@@ -186,7 +186,7 @@ uint32_t eval(int p,int q){
 						 break;
 			}
 		}
-		assert(p<m_op&&m_op<q);
+		assert(p<=m_op&&m_op<q);
 		assert(privilege(tokens[m_op].type)>1);
 		assert(m_op!=-1);
 		uint32_t left_main=eval(p,m_op-1),right_main=eval(m_op+1,q);
