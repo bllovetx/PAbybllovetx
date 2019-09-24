@@ -58,6 +58,7 @@ void isa_reg_display() {
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
   //printf("%s\n",s);
+  printf("%d %d %d",R_EAX,R_AX,R_AL);
   assert(*s=='$');
   return 0x100000;
 }
