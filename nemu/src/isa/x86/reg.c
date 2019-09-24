@@ -72,8 +72,10 @@ uint32_t isa_reg_str2val(const char *s, bool *success) {
 	  *(s_cap+cap_i)-=trans_char;
 	  cap_i++;
   }
-  printf("%s\n",s_cap);
+  //printf("%s\n",s_cap);
   assert(cap_i<=3);
-
+  for( int i=0;i<8;i++ ){if(strcmp(s_cap,regsl[i])==0)return reg_l(i);}
+  for( int i=0;i<8;i++ ){if(strcmp(s_cap,regsw[i])==0)return reg_w(i);}
+  for( int i=0;i<8;i++ ){if(strcmp(s_cap,regsb[i])==0)return reg_b(i);}
   return 0x100000;
 }
