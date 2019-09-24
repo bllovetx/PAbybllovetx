@@ -58,7 +58,21 @@ void isa_reg_display() {
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
   //printf("%s\n",s);
-  printf("%d %d %d",R_EAX,R_AX,R_AL);
   assert(*s=='$');
+  /* lowercase 32_16_8 */
+  for( int i=0;i<8;i++ ){if(strcmp(s+1,regsl[i])==0)return reg_l(i);}
+  for( int i=0;i<8;i++ ){if(strcmp(s+1,regsw[i])==0)return reg_w(i);}
+  for( int i=0;i<8;i++ ){if(strcmp(s+1,regsb[i])==0)return reg_b(i);}
+  /* highercase 32_16_8 */
+  const int trans_char='A'-'a';
+  char s_cap[4];
+  strcpy(s_cap,s+1);
+  int cap_i=0;
+  while(*(s_cap+cap_i)!='\0'){
+	  *(s_cap+cap_i)-=trans_char;
+	  cap_i++;
+  }
+  assert(cap_i<=3);
+
   return 0x100000;
 }
