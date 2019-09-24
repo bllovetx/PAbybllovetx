@@ -8,9 +8,9 @@
 
 uint32_t eval(int p,int q);
 	
-
+/* enum can be used as previlige */
 enum {
-  TK_NOTYPE = 256, TK_EQ,TK_HEX,TK_DEX
+  TK_NOTYPE = 256, TK_EQ,TK_NEQ,TK_AND,TK_OR,TK_HEX,TK_DEX
 
   /* TODO: Add more token types */
 
@@ -28,6 +28,9 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},         // equal
+  {"!+", TK_NEQ},		//not equal
+  {"&&", TK_AND},		//and
+  {"||", TK_OR},		//or
   {"\\*", '*'},         //multiply
   {"-", '-'},           //sub
   {"/", '/'},			//div
@@ -97,6 +100,10 @@ static bool make_token(char *e) {
 			case '/':tokens[nr_token].type='/';nr_token++;break;
 			case '(':tokens[nr_token].type='(';nr_token++;break;
 			case ')':tokens[nr_token].type=')';nr_token++;break;
+			case TK_EQ:tokens[nr_token].type=TK_EQ;nr_token++;break;
+			case TK_NEQ:tokens[nr_token].type=TK_NEQ;nr_token++;break;
+			case TK_AND:tokens[nr_token].type=TK_AND;nr_token++;break;
+			case TK_OR:tokens[nr_token].type=TK_OR;nr_token++;break;
 			case TK_HEX:tokens[nr_token].type=TK_HEX;
 						strncpy(tokens[nr_token].str,substr_start,substr_len);
 						tokens[nr_token].str[substr_len]='\0';nr_token++;break;
@@ -151,7 +158,7 @@ uint32_t eval(int p,int q){
 	else if( check_parentheses(p,q)==true ){
 		return eval(p+1,q-1);
 	}
-	else{
+	else{ 
 		int fd_main=-1,m_op=-1,op_pre=-1;
 		for(int i=p;i<=q;i++){
 			switch( tokens[i].type ){
@@ -187,8 +194,8 @@ uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
-  }
-
+  } 
+	assert(TK_NOTYPE>TK_EQ);
   /* TODO: Insert codes to evaluate the expression. */
   return eval(0,nr_token-1); 
 
