@@ -135,7 +135,7 @@ static int cmd_x(char *args){
 	return 0;
 }
 
-/* print memory--not finished */
+/* print memory */
 static int cmd_p(char *args){
     bool success=true;//need initailize
 	uint32_t expr_result=expr(args,&success);
