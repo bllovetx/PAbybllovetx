@@ -30,7 +30,7 @@ static struct rule {
   {"==", TK_EQ},         // equal
   {"!+", TK_NEQ},		//not equal
   {"&&", TK_AND},		//and
-  {"||", TK_OR},		//or
+ // {"||", TK_OR},		//or
   {"\\*", '*'},         //multiply
   {"-", '-'},           //sub
   {"/", '/'},			//div
