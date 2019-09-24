@@ -8,13 +8,15 @@
 
 uint32_t eval(int p,int q);
 	
-/* enum can be used as previlige */
 enum {
   TK_NOTYPE = 256, TK_EQ,TK_NEQ,TK_AND,TK_OR,TK_HEX,TK_DEX,DEREF
 
   /* TODO: Add more token types */
 
 };
+
+/* privilege table */
+#define p_token(pos) privilege(tokens[pos].type)
 #define p_t(type) privilege(type)+1
 int privilege(int type){
 	switch(type){
@@ -39,9 +41,9 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},         // equal
-  {"!+", TK_NEQ},		//not equal
+  {"!=", TK_NEQ},		//not equal
   {"&&", TK_AND},		//and
- // {"||", TK_OR},		//or
+  {"\\|\\|", TK_OR},		//or
   {"\\*", '*'},         //multiply
   {"-", '-'},           //sub
   {"/", '/'},			//div
@@ -139,7 +141,7 @@ static bool make_token(char *e) {
 bool check_parentheses(int p,int q){
 	int ch_p=-1;
 	for(int i=p;i<q;i++){
-		switch( tokens[i].type ){
+	 	switch( tokens[i].type ){
 			case '(':ch_p++;break;
 			case ')':ch_p--;break;
 			default :break;
@@ -163,30 +165,37 @@ uint32_t eval(int p,int q){
 			case TK_HEX:sscanf(tokens[p].str,"%x",&str_scan);break;
 			case TK_DEX:sscanf(tokens[p].str,"%d",&str_scan);break;
 			default:assert(0);
-		}
+		} 
 		return str_scan;
 	}
 	else if( check_parentheses(p,q)==true ){
 		return eval(p+1,q-1);
 	}
+	else if( tokens[p].type==DEREF ){
+		return vaddr_read(eval(p+1,q),4);
+	}
 	else{ 
-		int fd_main=-1,m_op=-1,op_pre=-1;
+		int fd_main=-1,m_op=-1;
 		for(int i=p;i<=q;i++){
 			switch( tokens[i].type ){
 				case '(':fd_main++;break;
 				case ')':fd_main--;break;
-				case '+':if(fd_main<0){m_op=i;op_pre++;};break;
-				case '-':if(fd_main<0){m_op=i;op_pre++;};break;
-				case '*':if(fd_main<0&&op_pre<0){m_op=i;};break;
-				case '/':if(fd_main<0&&op_pre<0){m_op=i;};break;
-				default :break;
+				default :if( fd_main<0 && (m_op==-1||p_token(i)>=p_token(m_op)) ){
+							 m_op=i;
+						 }
+						 break;
 			}
 		}
 		assert(p<m_op&&m_op<q);
+		assert(privilege(tokens[m_op].type)>1);
 		assert(m_op!=-1);
 		uint32_t left_main=eval(p,m_op-1),right_main=eval(m_op+1,q);
 		//printf("%d	%d\n",left_main,right_main);
 		switch( tokens[m_op].type ){
+			case TK_AND:return left_main&&right_main;break;
+			case TK_OR:return left_main||right_main;break;
+			case TK_EQ:return left_main==right_main;break;
+			case TK_NEQ:return left_main!=right_main;break;
 			case '+':return left_main+right_main;break;
 			case '-':return left_main-right_main;break;
 			case '*':return left_main*right_main;break;
@@ -205,8 +214,8 @@ uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
-  } 
-  printf("%d	%d\n",privilege(TK_NOTYPE),privilege(TK_EQ));
+  }  
+  //printf("%d	%d\n",privilege(TK_NOTYPE),privilege(TK_EQ));
   /* TODO: Insert codes to evaluate the expression. */
   return eval(0,nr_token-1); 
 
