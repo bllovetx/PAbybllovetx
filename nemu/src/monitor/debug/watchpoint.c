@@ -49,12 +49,12 @@ void free_wp(WP *wp){
 	wp->wp_used=false;		// change flag
 }
 void wp_used_display(){
-	printf("NO		Enb		old value		expr\n");
+	printf("NO		Enb		old value(dex)		old value(hex)		expr\n");
 	for(int i=0;i<NR_WP;i++){
 		if(wp_pool[i].wp_used){
 			char enb='n';
 			if(wp_pool[i].wp_Enb)enb='y';
-			printf("%d		%c		%u		%s\n",wp_pool[i].NO,enb,wp_pool[i].old_val,wp_pool[i].args);
+			printf("%d		%c		%u		0x%08x		%s\n",wp_pool[i].NO,enb,wp_pool[i].old_val,wp_pool[i].old_val,wp_pool[i].args);
 		}
 	}
 }
