@@ -49,7 +49,6 @@ void free_wp(WP *wp){
 	wp->wp_used=false;		// change flag
 }
 void wp_used_display(){
-	printf("%d\n",wp_pool[0].wp_Enb);
 	printf("NO		Enb		old value(dex)		old value(hex)		expr\n");
 	for(int i=0;i<NR_WP;i++){
 		if(wp_pool[i].wp_used){
