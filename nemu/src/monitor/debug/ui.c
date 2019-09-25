@@ -194,6 +194,7 @@ static int cmd_enable(char *args){
 static int cmd_unable(char *args){
 	unsigned int n;
 	sscanf(args,"%u",&n);
+	printf("%u\n",n);
 	wp_pool[n].wp_Enb=false;
 	return 0;
 }
