@@ -195,7 +195,7 @@ static int cmd_unable(char *args){
 	sscanf(args,"%u",&n);
 	//printf("%u\n",n);
 	wp_pool[n].wp_Enb=false;
-	printf("%s %d\n",wp_pool[n].args,wp_pool[n].wp_Enb);
+	//printf("%s %d\n",wp_pool[n].args,wp_pool[n].wp_Enb);
 	return 0;
 }
 
