@@ -5,13 +5,14 @@
 
 static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
-
+WP* new_wp();
+void free_wp(WP* wp);
 void init_wp_pool() {
   int i;
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
-	wp_pool[i].used=false;
+	wp_pool[i].wp_used=false;
   }
   wp_pool[NR_WP - 1].next = NULL;
 
@@ -49,7 +50,7 @@ void free_wp(WP *wp){
 }
 void wp_used_display(){
 	printf("NO		Enb		old value		expr\n");
-	for(int i=0;u<NR_WP;i++){
+	for(int i=0;i<NR_WP;i++){
 		if(wp_pool[i].wp_used){
 			char enb='n';
 			if(wp_pool[i].wp_Enb)enb='y';

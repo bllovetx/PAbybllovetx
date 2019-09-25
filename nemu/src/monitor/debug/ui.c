@@ -8,7 +8,9 @@
 #include <readline/history.h>
 
 void cpu_exec(uint64_t);
-
+extern WP* new_wp();
+static WP wp_pool[];
+extern void free_wp(WP* wp);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
   static char *line_read = NULL;
@@ -62,7 +64,7 @@ static struct {
   { "w","set new watchpoint",cmd_w},
   { "d","delete watchpoint N",cmd_d},
   { "enable","enable watchpoint N",cmd_enable},
-  { "unable","unable watchpoint N",cmd_enable}
+  { "unable","unable watchpoint N",cmd_unable}
   /* TODO: Add more commands */
 
 };
@@ -173,14 +175,27 @@ static int cmd_w(char *args){
 	bool success=true;
 	newwp->old_val=expr(args,&success);
 	assert(success);
+	return 0;
 }
 /* delete watchpoint */
 static int cmd_d(char *args){
 	unsigned int n;
 	sscanf(args,"%u",&n);
 	free_wp(&wp_pool[n]);
+	return 0;
 }
-
+static int cmd_enable(char *args){
+	unsigned int n;
+	sscanf(args,"%u",&n);
+	wp_pool[n].wp_Enb=true;
+	return 0;
+}
+static int cmd_unable(char *args){
+	unsigned int n;
+	sscanf(args,"%u",&n);
+	wp_pool[n].wp_Enb=false;
+	return 0;
+}
 
 void ui_mainloop(int is_batch_mode) {
   if (is_batch_mode) {

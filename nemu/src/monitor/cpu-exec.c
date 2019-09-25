@@ -11,7 +11,8 @@
 
 /* restrict the size of log file */
 #define LOG_MAX (1024 * 1024)
-
+extern WP* head,free_;
+extern uint32_t expr(char* e,bool* success);
 NEMUState nemu_state = {.state = NEMU_STOP};
 
 void interpret_rtl_exit(int state, vaddr_t halt_pc, uint32_t halt_ret) {
@@ -59,7 +60,7 @@ void cpu_exec(uint64_t n) {
   }
 
     /* TODO: check watchpoints here. */
-  for(auto wp_i=head;wp_i!=NULL;wp_i=wp_i->next){
+  for(WP* wp_i=head;wp_i!=NULL;wp_i=wp_i->next){
 	  if( (wp_i->wp_Enb) && (wp_i->wp_used) ){
 		  bool success=true;
 		  uint32_t new_wval=expr(wp_i->args,&success);
