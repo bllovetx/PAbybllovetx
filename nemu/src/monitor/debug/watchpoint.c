@@ -1,9 +1,9 @@
 #include "monitor/watchpoint.h"
 #include "monitor/expr.h"
 
-#define NR_WP 32
-
-static WP wp_pool[NR_WP] = {};
+//#define NR_WP 32
+//remove static add extern in w....h
+WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
 WP* new_wp();
 void free_wp(WP* wp);
