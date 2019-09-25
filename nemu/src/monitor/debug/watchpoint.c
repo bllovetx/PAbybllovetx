@@ -61,14 +61,14 @@ void wp_used_display(){
 bool check_watch(){
 	bool watch_changed=false;
 	for(WP* wp_i=head;wp_i!=NULL;wp_i=wp_i->next){
-	    if( (wp_i->wp_Enb) && (wp_i->wp_used) ){
+	    if( wp_i->wp_used ){
 	   	 bool success=true;
 	   	 uint32_t new_wval=expr(wp_i->args,&success);
 	   	 assert(success);
 	   	 if( wp_i->old_val!=new_wval ){
 	   		 printf("watchpoint %d changed:%s\nold value:%d(%#x)    new value:%d(%#x)\n",
 	   				 wp_i->NO,wp_i->args,wp_i->old_val,wp_i->old_val,new_wval,new_wval);
-	   		 watch_changed=true;
+			 if(wp_i->wp_Enb)watch_changed=true;
 	   		 wp_i->old_val=new_wval;
 	   	 }
 	    }
