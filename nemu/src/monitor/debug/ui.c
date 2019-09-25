@@ -124,9 +124,9 @@ static int cmd_info(char *args){
 	/* extract first argument */
 	char *arg=strtok(NULL," ");
 	/* case r: info all regs */
-	if( strcmp(arg,"r")==0 )  isa_reg_display();
-	if( strcmp(arg,"w")==0 )  wp_used_display();
-	else printf("Unknown command\n");
+	if( strcmp(arg,"r")==0 ) {isa_reg_display();return 0;}
+	if( strcmp(arg,"w")==0 ) {wp_used_display();return 0;}
+	printf("Unknown command\n");
 	return 0;
 }
 
