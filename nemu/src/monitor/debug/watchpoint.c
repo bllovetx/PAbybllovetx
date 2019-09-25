@@ -54,7 +54,7 @@ void wp_used_display(){
 		if(wp_pool[i].wp_used){
 			char enb='n';
 			if(wp_pool[i].wp_Enb)enb='y';
-			printf("%d		%c		%u		0x%08x		%s\n",wp_pool[i].NO,enb,wp_pool[i].old_val,wp_pool[i].old_val,wp_pool[i].args);
+			printf("%2d		%3c		%14u		    0x%08x		%s\n",wp_pool[i].NO,enb,wp_pool[i].old_val,wp_pool[i].old_val,wp_pool[i].args);
 		}
 	}
 }
