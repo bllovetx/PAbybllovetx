@@ -66,8 +66,8 @@ bool check_watch(){
 	   	 uint32_t new_wval=expr(wp_i->args,&success);
 	   	 assert(success);
 	   	 if( wp_i->old_val!=new_wval ){
-	   		 printf("watchpoint %d changed:%s\nold value:%d    new value:%d\n",
-	   				 wp_i->NO,wp_i->args,wp_i->old_val,new_wval);
+	   		 printf("watchpoint %d changed:%s\nold value:%d(%#x)    new value:%d(%#x)\n",
+	   				 wp_i->NO,wp_i->args,wp_i->old_val,wp_i->old_val,new_wval,new_wval);
 	   		 watch_changed=true;
 	   		 wp_i->old_val=new_wval;
 	   	 }
