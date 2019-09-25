@@ -16,11 +16,11 @@ static char* rl_gets() {
   if (line_read) {
     free(line_read);
     line_read = NULL;
-  }
+  } 
 
   line_read = readline("(nemu) ");
 
-  if (line_read && *line_read) {
+  if  (line_read && *line_read) {
     add_history(line_read);
   }
 
@@ -42,6 +42,10 @@ static int cmd_help(char *args);
 static int cmd_info(char *args);
 static int cmd_x(char *args);
 static int cmd_p(char *args);
+static int cmd_w(char *args);
+static int cmd_d(char *args);
+static int cmd_enable(char *args);
+static int cmd_unable(char *args);
 
 static struct {
   char *name;
@@ -52,9 +56,13 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si","Step N instruction exactly",cmd_si },
-  { "info","info r	print register\n",cmd_info },
+  { "info","info r	print register\ninfo w	print all watchpoint information\n",cmd_info },
   { "x","scan memory",cmd_x},
-  { "p","print memory",cmd_p}
+  { "p","print memory",cmd_p},
+  { "w","set new watchpoint",cmd_w},
+  { "d","delete watchpoint N",cmd_d},
+  { "enable","enable watchpoint N",cmd_enable},
+  { "unable","unable watchpoint N",cmd_enable}
   /* TODO: Add more commands */
 
 };
@@ -105,7 +113,7 @@ static int cmd_si(char *args){
 	cpu_exec(N);
 	return 0;
 }
-
+void wp_used_display();
 /* related to isa */
 void isa_reg_display();
 
@@ -114,6 +122,7 @@ static int cmd_info(char *args){
 	char *arg=strtok(NULL," ");
 	/* case r: info all regs */
 	if( strcmp(arg,"r")==0 )  isa_reg_display();
+	if( strcmp(arg,"w")==0 )  wp_used_display();
 	else printf("Unknown command\n");
 	return 0;
 }
@@ -150,11 +159,28 @@ static int cmd_p(char *args){
 			printf("0x%08x	",vaddr_read(addr,4));
 			num++;
 			addr+=4;
-	  	}
+	  	 }
 		printf("\n");
-	}  
+	}   
 	return 0;
 }
+
+/* set watchpoint */
+static int cmd_w(char *args){
+	WP* newwp=new_wp();
+	strcpy(newwp->args,args);
+	assert(strcmp(newwp->args,args)==0);
+	bool success=true;
+	newwp->old_val=expr(args,&success);
+	assert(success);
+}
+/* delete watchpoint */
+static int cmd_d(char *args){
+	unsigned int n;
+	sscanf(args,"%u",&n);
+	free_wp(&wp_pool[n]);
+}
+
 
 void ui_mainloop(int is_batch_mode) {
   if (is_batch_mode) {

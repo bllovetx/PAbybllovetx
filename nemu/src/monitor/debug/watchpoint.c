@@ -11,6 +11,7 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = &wp_pool[i + 1];
+	wp_pool[i].used=false;
   }
   wp_pool[NR_WP - 1].next = NULL;
 
@@ -22,16 +23,37 @@ void init_wp_pool() {
 WP* new_wp(){
 	assert(free_!=NULL);
 	WP *wp_return=free_;
-	free_=free_->next;
+	free_=free_->next;		// get newwp from free
+	wp_return->next=head;
+	head=wp_return;			// insert newwp at head
+	wp_return->wp_Enb=true;
+	wp_return->wp_used=true;// change flags
 	return wp_return;
 }
 void free_wp(WP *wp){
+	/* find ancestor */
 	WP* wp_pre=NULL;
-	for(int i=0;i<NR_WP;i++){
-		if(wp_pool[i].next==wp)wp_pre=&wp_pool;
+	for(int i=0;i<NR_WP;i++){ 
+		if(wp_pool[i].next==wp)wp_pre=&wp_pool[i];
 	}
-	assert(wp_pre!=NULL);
-	wp_pre->next=wp->next;
-	wp->next=free_;
+	if( wp_pre==NULL ){		// head
+		assert(head==wp);
+		head=wp->next;
+	}
+	else{					// not head
+		wp_pre->next=wp->next;
+	}
+	wp->next=free_;			// insert wp at free_
 	free_=wp;
+	wp->wp_used=false;		// change flag
+}
+void wp_used_display(){
+	printf("NO		Enb		old value		expr\n");
+	for(int i=0;u<NR_WP;i++){
+		if(wp_pool[i].wp_used){
+			char enb='n';
+			if(wp_pool[i].wp_Enb)enb='y';
+			printf("%d		%c		%u		%s\n",wp_pool[i].NO,enb,wp_pool[i].old_val,wp_pool[i].args);
+		}
+	}
 }

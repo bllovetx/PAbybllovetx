@@ -138,6 +138,7 @@ static bool make_token(char *e) {
       return false;
     }
   }
+  assert(nr_token<=32);
 
   return true;
 }
