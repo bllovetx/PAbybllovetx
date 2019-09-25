@@ -10,7 +10,7 @@
 void cpu_exec(uint64_t);
 extern WP* new_wp();
 #define NR_WP 32
-extern WP wp_pool[NR_WP];
+extern WP wp_pool[];
 extern void free_wp(WP* wp);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
