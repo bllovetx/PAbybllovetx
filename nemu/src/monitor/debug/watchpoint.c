@@ -49,6 +49,10 @@ void free_wp(WP *wp){
 	wp->wp_used=false;		// change flag
 }
 void wp_used_display(){
+	if(head==NULL){
+		printf("No watchpoints exist right now!\n");
+		return;
+	}
 	printf("NO		Enb		old value(dex)		old value(hex)		expr\n");
 	for(int i=0;i<NR_WP;i++){
 		if(wp_pool[i].wp_used){
@@ -57,6 +61,7 @@ void wp_used_display(){
 			printf("%2d		%3c		%14u		    0x%08x		%s\n",wp_pool[i].NO,enb,wp_pool[i].old_val,wp_pool[i].old_val,wp_pool[i].args);
 		}
 	}
+	return;
 }
 bool check_watch(){
 	bool watch_changed=false;
