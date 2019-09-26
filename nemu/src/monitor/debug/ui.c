@@ -58,7 +58,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si","Step N instruction exactly",cmd_si },
-  { "info","info r	print register\ninfo w	print all watchpoint information\n",cmd_info },
+  { "info","info r	print register\n	   info w	print all watchpoint information",cmd_info },
   { "x","scan memory",cmd_x},
   { "p","print memory",cmd_p},
   { "w","set new watchpoint",cmd_w},
