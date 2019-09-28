@@ -1,6 +1,6 @@
 NAME = nemu
 
-ifneq ($(MAKECMDGOALS),clean) # ignore check for make clean
+ifneq ($(findstring$(MAKECMDGOALS),clean,count),) # ignore check for make clean
 ISA ?= x86
 ISAS = $(shell ls src/isa/)
 $(info Building $(ISA)-$(NAME))
@@ -65,6 +65,10 @@ override ARGS += -d $(QEMU_SO)
 IMG :=
 NEMU_EXEC := $(BINARY) $(ARGS) $(IMG)
 
+# Command for count
+COUNT_L := $(shell find . -name "*.c" -or -name "*.h" | xargs grep -Ev "^$$" | wc -l)
+COUNT_ADD := $(shell expr $(COUNT_L) - 4007)
+
 $(BINARY): $(OBJS)
 	$(call git_commit, "compile")
 	@echo + LD $@
@@ -84,3 +88,7 @@ clean:
 	-rm -rf $(BUILD_DIR)
 	$(MAKE) -C tools/gen-expr clean
 	$(MAKE) -C tools/qemu-diff clean
+
+count:
+	@echo Totally $(COUNT_L) lines of code in nemu of this branch
+	@echo Totally $(COUNT_ADD) lines added to the frame code
