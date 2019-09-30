@@ -1,9 +1,11 @@
 NAME = nemu
 
-ifneq ($(findstring$(MAKECMDGOALS),clean,count),) # ignore check for make clean
+ifneq ($(MAKECMDGOALS),clean) # ignore check for make clean
 ISA ?= x86
 ISAS = $(shell ls src/isa/)
+ifneq ($(MAKECMDGOALS),count) # ignore check for make count
 $(info Building $(ISA)-$(NAME))
+endif
 
 ifeq ($(filter $(ISAS), $(ISA)), ) # ISA must be valid
 $(error Invalid ISA. Supported: $(ISAS))
