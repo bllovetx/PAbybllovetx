@@ -1,13 +1,17 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  TODO();
+  //TODO();
+  id_dest->val=id_dest->val+id_src->val;
+  rtl_sr(id_dest->reg,&id_dest->val,id_dest->width);
 
   print_asm_template2(add);
 }
 
 make_EHelper(sub) {
-  TODO();
+  //TODO();
+  id_dest->val=id_dest->val-id_src->val;
+  rtl_sr(id_dest->reg,&id_dest->val,id_dest->width);
 
   print_asm_template2(sub);
 }
