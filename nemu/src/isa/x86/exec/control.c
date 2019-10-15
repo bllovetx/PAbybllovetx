@@ -28,6 +28,7 @@ make_EHelper(call) {
   // the target address is calculated at the decode stage
   //TODO();
   rtl_push(&decinfo.seq_pc);
+  printf("%x\n",decinfo.seq_pc);
   decinfo.seq_pc=decinfo.jmp_pc;
 
   print_asm("call %x", decinfo.jmp_pc);
