@@ -23,6 +23,7 @@ make_EHelper(xor) {
 		  vaddr_write(id_dest->addr,id_dest->val,id_dest->width);break;
 	  default: assert(0);
   }
+  printf("%x\n",cpu.eax);
 
   print_asm_template2(xor);
 }
