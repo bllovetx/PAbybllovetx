@@ -3,16 +3,28 @@
 make_EHelper(add) {
   //TODO();
   rtl_add(&id_dest->val,&id_dest->val,&id_src->val);
-  rtl_sr(id_dest->reg,&id_dest->val,id_dest->width);
-
+  switch(id_dest->type){
+	  case OP_TYPE_REG:
+		  rtl_sr(id_dest->reg,&id_dest->val,id_dest->width);break;		  
+	  case OP_TYPE_MEM:
+		  vaddr_write(id_dest->addr,id_dest->val,id_dest->width);break;
+	  default: assert(0);
+  }
+ 
   print_asm_template2(add);
 }
 
 make_EHelper(sub) {
   //TODO();
   rtl_sub(&id_dest->val,&id_dest->val,&id_src->val);
-  rtl_sr(id_dest->reg,&id_dest->val,id_dest->width);
-
+  switch(id_dest->type){
+	  case OP_TYPE_REG:
+		  rtl_sr(id_dest->reg,&id_dest->val,id_dest->width);break;		  
+	  case OP_TYPE_MEM:
+		  vaddr_write(id_dest->addr,id_dest->val,id_dest->width);break;
+	  default: assert(0);
+  }
+ 
   print_asm_template2(sub);
 }
 
