@@ -20,6 +20,7 @@ make_EHelper(lea);
 
 /* instr-logic */
 make_EHelper(xor);
+make_EHelper(and);
 
 /* instr-special */
 make_EHelper(inv);
