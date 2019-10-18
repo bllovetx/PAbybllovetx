@@ -16,6 +16,7 @@ make_EHelper(add);
 /* instr-datamove */
 make_EHelper(mov);
 make_EHelper(push);
+make_EHelper(lea);
 
 /* instr-logic */
 make_EHelper(xor);
