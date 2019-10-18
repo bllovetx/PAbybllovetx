@@ -37,7 +37,7 @@ make_EHelper(call) {
 make_EHelper(ret) {
   //TODO();
   rtl_pop(&decinfo.seq_pc);
-  printf("%x\n",decinfo.seq_pc);
+  //printf("%x\n",decinfo.seq_pc);
 
   print_asm("ret");
 }
