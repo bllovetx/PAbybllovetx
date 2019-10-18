@@ -16,14 +16,8 @@ make_EHelper(and) {
 make_EHelper(xor) {
   //TODO();
   rtl_xor(&id_dest->val,&id_dest->val,&id_src->val);
-  switch(id_dest->type){
-	  case OP_TYPE_REG:
-		  rtl_sr(id_dest->reg,&id_dest->val,id_dest->width);break;		  
-	  case OP_TYPE_MEM:
-		  vaddr_write(id_dest->addr,id_dest->val,id_dest->width);break;
-	  default: assert(0);
-  }
-  //printf("%x\n",cpu.eax);
+  operand_write(id_dest,&id_dest->val);
+ //printf("%x\n",cpu.eax);
 
   print_asm_template2(xor);
 }

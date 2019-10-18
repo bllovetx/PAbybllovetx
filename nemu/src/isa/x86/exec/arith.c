@@ -11,14 +11,8 @@ make_EHelper(add) {
 make_EHelper(sub) {
   //TODO();
   rtl_sub(&id_dest->val,&id_dest->val,&id_src->val);
-  switch(id_dest->type){
-	  case OP_TYPE_REG:
-		  rtl_sr(id_dest->reg,&id_dest->val,id_dest->width);break;		  
-	  case OP_TYPE_MEM:
-		  vaddr_write(id_dest->addr,id_dest->val,id_dest->width);break;
-	  default: assert(0);
-  }
- 
+  operand_write(id_dest,&id_dest->val);
+
   print_asm_template2(sub);
 }
 
