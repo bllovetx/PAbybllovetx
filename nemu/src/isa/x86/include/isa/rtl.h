@@ -40,28 +40,42 @@ static inline void rtl_pop(rtlreg_t* dest) {
   cpu.esp=cpu.esp+4;
 }
 
+#define rtls(sd) (sd>>(width*8-1))
+#define rtlus(sd) rtls((unsigned)sd)
+
 static inline void rtl_is_sub_overflow(rtlreg_t* dest,
     const rtlreg_t* res, const rtlreg_t* src1, const rtlreg_t* src2, int width) {
   // dest <- is_overflow(src1 - src2)
-  TODO();
+  //TODO();
+  assert( rtlus(*src1)<=1 && rtlus(*src2)<=1 );
+  assert( rtlus(*res)<=1 );
+  *dest=( rtlus(*src1)!=rtlus(*src2) && rtlus(*res)!=rtlus(*src1) );
+
 }
 
 static inline void rtl_is_sub_carry(rtlreg_t* dest,
     const rtlreg_t* res, const rtlreg_t* src1) {
   // dest <- is_carry(src1 - src2)
-  TODO();
+  //TODO();
+  assert(dest!=NULL);
+  *dest=(((unsigned)*res)>((unsigned)*src1));
 }
 
 static inline void rtl_is_add_overflow(rtlreg_t* dest,
     const rtlreg_t* res, const rtlreg_t* src1, const rtlreg_t* src2, int width) {
   // dest <- is_overflow(src1 + src2)
-  TODO();
+  //TODO();
+  assert( rtlus(*src1)<=1 && rtlus(*src2)<=1 );
+  assert( rtlus(*res)<=1 );
+  *dest=( rtlus(*src1)==rtlus(*src2) && rtlus(*res)!=rtlus(*src1) );
 }
 
 static inline void rtl_is_add_carry(rtlreg_t* dest,
     const rtlreg_t* res, const rtlreg_t* src1) {
   // dest <- is_carry(src1 + src2)
-  TODO();
+  //TODO();
+  assert(dest!=NULL);
+  *dest=(((unsigned)*res)<((unsigned)*src1));
 }
 
 #define make_rtl_setget_eflags(f) \
@@ -87,8 +101,8 @@ static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
   //TODO();
-  cpu.eflags.SF=(((unsigned)*result) >> 31);
-  assert((((unsigned)*result) >> 31)<=1);
+  cpu.eflags.SF=rtlus(*result);
+  assert(rtlus(*result)<=1);
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {

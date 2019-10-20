@@ -12,6 +12,7 @@ make_EHelper(operand_size);
 /* instr-arith */
 make_EHelper(sub);
 make_EHelper(add);
+make_EHelper(cmp);
 
 /* instr-datamove */
 make_EHelper(mov);
