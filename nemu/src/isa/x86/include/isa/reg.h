@@ -37,7 +37,24 @@ typedef struct {
   union	{
 	  uint32_t EFLAGS;
 	  struct{
-		  bool CF,ZF,SF,IF,OF;
+		  uint16_t uu18_0	:14;	//bit 18
+		  uint8_t VM		:1;		//bit 17
+		  uint8_t RF		:1;		//bit 16
+		  uint8_t uu15_0	:1;		//bit 15
+		  uint8_t NT		:1;		//bit 14
+		  uint8_t IOPL		:2;		//bit 12
+		  uint8_t OF		:1;		//bit 11
+		  uint8_t DF		:1;		//bit 10
+		  uint8_t IF		:1;		//bit 9
+		  uint8_t TF		:1;		//bit 8
+		  uint8_t SF		:1;		//bit 7
+		  uint8_t ZF		:1;		//bit 6
+		  uint8_t uu5_0		:1;		//bit 5
+		  uint8_t AF		:1;		//bit 4
+		  uint8_t uu3_0		:1;		//bit 3
+		  uint8_t PF		:1;		//bit 2
+		  uint8_t uu1_1		:1;		//bit 1
+		  uint8_t CF		:1;		//bit 0
 	  }eflags;
   };
 

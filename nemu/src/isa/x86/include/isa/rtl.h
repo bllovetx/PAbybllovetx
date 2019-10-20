@@ -66,10 +66,11 @@ static inline void rtl_is_add_carry(rtlreg_t* dest,
 
 #define make_rtl_setget_eflags(f) \
   static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
-    TODO(); \
+	cpu.eflags.f = *src; \
+	assert(*src<=1); \
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
-    TODO(); \
+	*dest = cpu.eflags.f; \
   }
 
 make_rtl_setget_eflags(CF)
@@ -79,12 +80,15 @@ make_rtl_setget_eflags(SF)
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-  TODO();
+  //TODO();
+  cpu.eflags.ZF=(*result==0?1:0);
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
-  TODO();
+  //TODO();
+  cpu.eflags.SF=(((unsigned)*result) >> 31);
+  assert((((unsigned)*result) >> 31)<=1);
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {
