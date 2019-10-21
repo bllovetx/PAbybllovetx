@@ -33,6 +33,7 @@ make_EHelper(test);
 /* instr-special */
 make_EHelper(inv);
 make_EHelper(nemu_trap);
+make_EHelper(nop);
 
 
 
