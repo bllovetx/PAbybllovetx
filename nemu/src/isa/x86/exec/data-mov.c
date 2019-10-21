@@ -32,13 +32,13 @@ make_EHelper(popa) {
 
 make_EHelper(leave) {
   //TODO();
-  // ebp/bp: 0x101 
-  // esp/sp: 0x100
+  // ebp/bp: 0b101 
+  // esp/sp: 0b100
   int width = ( decinfo.isa.is_operand_size_16 ? 2 :4 );
   // (e)sp <- (e)bp
-  rtl_lr(&s0,0x101,width);rtl_sr(0x100,&s0,width);
+  rtl_lr(&s0,0b101,width);rtl_sr(0b100,&s0,width);
   // pop -> (e)bp
-  rtl_pop(&s0);rtl_sr(0x101,&s0,width);
+  rtl_pop(&s0);rtl_sr(0b101,&s0,width);
 
   print_asm("leave");
 }
