@@ -20,6 +20,7 @@ make_EHelper(mov);
 make_EHelper(push);
 make_EHelper(lea);
 make_EHelper(movzx);
+make_EHelper(leave);
 
 /* instr-logic */
 make_EHelper(xor);
