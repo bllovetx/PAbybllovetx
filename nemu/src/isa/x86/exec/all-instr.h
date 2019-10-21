@@ -3,6 +3,7 @@
 /* instr-control */
 make_EHelper(call);
 make_EHelper(ret);
+make_EHelper(jcc);
 
 /* instr-prefix */
 make_EHelper(operand_size);
