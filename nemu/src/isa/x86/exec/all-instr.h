@@ -14,6 +14,7 @@ make_EHelper(operand_size);
 make_EHelper(sub);
 make_EHelper(add);
 make_EHelper(cmp);
+make_EHelper(inc);
 
 /* instr-datamove */
 make_EHelper(mov);
