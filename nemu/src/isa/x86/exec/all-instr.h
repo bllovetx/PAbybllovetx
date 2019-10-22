@@ -18,6 +18,7 @@ make_EHelper(inc);
 make_EHelper(dec);
 make_EHelper(adc);
 make_EHelper(imul2);
+make_EHelper(idiv);
 
 /* instr-datamove */
 make_EHelper(mov);
