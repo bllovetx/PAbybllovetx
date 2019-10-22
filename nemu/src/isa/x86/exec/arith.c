@@ -2,16 +2,49 @@
 
 make_EHelper(add) {
   //TODO();
-  rtl_add(&id_dest->val,&id_dest->val,&id_src->val);
-  operand_write(id_dest,&id_dest->val);
+  rtl_add(&s0,&id_dest->val,&id_src->val);
+  operand_write(id_dest,&s0);
+
+  if (id_dest->width != 4) {
+    rtl_andi(&s0, &s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
+
+ // update ZF&SF
+  rtl_update_ZFSF(&s0, id_dest->width);
+
+  // update CF
+  rtl_is_add_carry(&s1, &s0, &id_dest->val);
+  rtl_set_CF(&s1);
+
+  // update OF
+  rtl_is_add_overflow(&s1, &s0, &id_dest->val, &id_src->val, id_dest->width);
+  rtl_set_OF(&s1);
+
 
   print_asm_template2(add);
 }
 
 make_EHelper(sub) {
   //TODO();
-  rtl_sub(&id_dest->val,&id_dest->val,&id_src->val);
-  operand_write(id_dest,&id_dest->val);
+  rtl_sub(&s0,&id_dest->val,&id_src->val);
+  operand_write(id_dest,&s0);
+
+  if (id_dest->width != 4) {
+    rtl_andi(&s0, &s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
+
+ // update ZF&SF
+  rtl_update_ZFSF(&s0, id_dest->width);
+
+  // update CF
+  rtl_is_sub_carry(&s1, &s0, &id_dest->val);
+  rtl_set_CF(&s1);
+
+  // update OF
+  rtl_is_sub_overflow(&s1, &s0, &id_dest->val, &id_src->val, id_dest->width);
+  rtl_set_OF(&s1);
+
+
 
   print_asm_template2(sub);
 }
@@ -21,7 +54,7 @@ make_EHelper(cmp) {
   // s0 = dest - src
   rtl_sub(&s0, &id_dest->val, &id_src->val);
 
-   if (id_dest->width != 4) {
+  if (id_dest->width != 4) {
     rtl_andi(&s0, &s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
   }
 
@@ -43,8 +76,25 @@ make_EHelper(cmp) {
 
 make_EHelper(inc) {
   //TODO();
-  rtl_addi(&id_dest->val,&id_dest->val,1);
-  operand_write(id_dest,&id_dest->val);
+  rtl_addi(&s0,&id_dest->val,1);
+  operand_write(id_dest,&s0);
+
+  if (id_dest->width != 4) {
+    rtl_andi(&s0, &s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
+  rtl_li(&s2,1);
+
+ // update ZF&SF
+  rtl_update_ZFSF(&s0, id_dest->width);
+
+  // update CF
+  rtl_is_add_carry(&s1, &s0, &id_dest->val);
+  rtl_set_CF(&s1);
+
+  // update OF
+  rtl_is_add_overflow(&s1, &s0, &id_dest->val, &s2, id_dest->width);
+  rtl_set_OF(&s1);
+
 
   print_asm_template1(inc);
 }
