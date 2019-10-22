@@ -187,6 +187,8 @@ make_EHelper(sbb) {
   print_asm_template2(sbb);
 }
 
+// OF & CF remain unrealized
+
 make_EHelper(mul) {
   rtl_lr(&s0, R_EAX, id_dest->width);
   rtl_mul_lo(&s1, &id_dest->val, &s0);
