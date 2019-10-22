@@ -125,7 +125,20 @@ make_EHelper(dec) {
 }
 
 make_EHelper(neg) {
-  TODO();
+  //TODO();
+  s0=-(id_dest->val);
+  operand_write(id_dest,&s0);
+  s1=((s0!=0)?1:0);
+  if (id_dest->width != 4) {
+    rtl_andi(&s0, &s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
+  //CF ZFSF
+ rtl_set_CF(&s1);
+ rtl_update_ZFSF(&s0,id_dest->width);
+ // OF
+ rtl_li(&s2,0);
+ rtl_is_sub_overflow(&s1,&s0,&s2,&id_dest->val,id_dest->width);
+ rtl_set_OF(&s1);
 
   print_asm_template1(neg);
 }
