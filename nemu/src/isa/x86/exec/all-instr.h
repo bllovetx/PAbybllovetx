@@ -6,6 +6,7 @@ make_EHelper(ret);
 make_EHelper(jcc);
 make_EHelper(jmp);
 make_EHelper(call_rm);
+make_EHelper(jmp_rm);
 
 /* instr-prefix */
 make_EHelper(operand_size);
