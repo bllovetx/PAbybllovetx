@@ -76,13 +76,13 @@ make_EHelper(cmp) {
 
 make_EHelper(inc) {
   //TODO();
-  rtl_addi(&s0,&id_dest->val,1);
+  rtl_li(&s2,1);
+  rtl_add(&s0,&id_dest->val,&s2);
   operand_write(id_dest,&s0);
 
   if (id_dest->width != 4) {
     rtl_andi(&s0, &s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
   }
-  rtl_li(&s2,1);
 
  // update ZF&SF
   rtl_update_ZFSF(&s0, id_dest->width);
@@ -100,7 +100,26 @@ make_EHelper(inc) {
 }
 
 make_EHelper(dec) {
-  TODO();
+  //TODO();
+  rtl_li(&s2,1);
+  rtl_sub(&s0,&id_dest->val,&s2);
+  operand_write(id_dest,&s0);
+
+  if (id_dest->width != 4) {
+    rtl_andi(&s0, &s0, 0xffffffffu >> ((4 - id_dest->width) * 8));
+  }
+
+ // update ZF&SF
+  rtl_update_ZFSF(&s0, id_dest->width);
+
+  // update CF
+  rtl_is_sub_carry(&s1, &s0, &id_dest->val);
+  rtl_set_CF(&s1);
+
+  // update OF
+  rtl_is_sub_overflow(&s1, &s0, &id_dest->val, &s2, id_dest->width);
+  rtl_set_OF(&s1);
+
 
   print_asm_template1(dec);
 }
