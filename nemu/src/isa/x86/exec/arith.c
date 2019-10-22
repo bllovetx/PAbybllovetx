@@ -180,7 +180,6 @@ make_EHelper(sbb) {
   rtl_set_CF(&s0);
 
   // update OF
-  assert(0);
   rtl_is_sub_overflow(&s0, &s1, &id_dest->val, &id_src->val, id_dest->width);
   rtl_set_OF(&s0);
 
