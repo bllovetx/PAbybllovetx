@@ -57,7 +57,7 @@ $(OBJ_DIR)/%.o: src/%.c
 
 # Some convenient rules
 
-.PHONY: app run gdb clean run-env $(QEMU_SO)
+.PHONY: app run gdb clean run-env $(QEMU_SO) count
 app: $(BINARY)
 
 override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
