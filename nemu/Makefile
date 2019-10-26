@@ -57,7 +57,7 @@ $(OBJ_DIR)/%.o: src/%.c
 
 # Some convenient rules
 
-.PHONY: app run gdb clean run-env $(QEMU_SO) count
+.PHONY: app run gdb clean run-env $(QEMU_SO) count vnemu vnexus
 app: $(BINARY)
 
 override ARGS ?= -l $(BUILD_DIR)/nemu-log.txt
@@ -94,3 +94,5 @@ clean:
 count:
 	@echo Totally $(COUNT_L) lines of code in nemu of this branch
 	@echo Totally $(COUNT_ADD) lines added to the frame code
+
+
