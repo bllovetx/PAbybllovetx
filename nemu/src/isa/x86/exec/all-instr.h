@@ -13,6 +13,7 @@ make_EHelper(operand_size);
 
 /* instr-system */
 make_EHelper(out);
+make_EHelper(in);
 
 /* instr-arith */
 make_EHelper(sub);
