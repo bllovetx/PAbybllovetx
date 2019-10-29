@@ -5,9 +5,17 @@
 
 /* return num of char (\0 included) */
 
+/* max printf size */
+#define P_BUF_SIZE 256
+char p_buf[P_BUF_SIZE];
+
 int printf(const char *fmt, ...) {
-  assert(0);
-  return 0;
+  va_list ap;va_start(ap,fmt);
+  unsigned int i;
+  i=vsprintf(p_buf,fmt,ap);
+  va_end(ap);
+  for(char* s=p_buf;*s;s++)_putc(*s);
+  return i;
 }
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
