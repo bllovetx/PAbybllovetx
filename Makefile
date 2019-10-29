@@ -1,7 +1,8 @@
 include nemu/Makefile.git
 
-# Working spaces for nemu
-V_CODE = code $(NEMU_HOME)
+# Working spaces for vscode
+V_NEMU = code $(NEMU_HOME)
+V_AM= code $(AM_HOME)
 #NEMU_WS = include src src/isa/x86 tools
 #NEMU_WSDIR = $(addprefix $(NEMU_HOME)/, $(NEMU_WS))
 
@@ -19,9 +20,15 @@ submit: clean
 	STUID=$(STUID) STUNAME=$(STUNAME) bash -c "$$(curl -s http://ics.nju.edu.cn/people/yanyanjiang/teach/submit.sh)"
 
 vnemu:
-	@$(addprefix $(V_CODE)/, include)
-	@$(addprefix $(V_CODE)/, src)
-	@$(addprefix $(V_CODE)/, src/isa/x86)
-	@$(V_CODE)  #(tools)
+	@$(addprefix $(V_NEMU)/, include)
+	@$(addprefix $(V_NEMU)/, src)
+	@$(addprefix $(V_NEMU)/, src/isa/x86)
+	@$(V_NEMU)  #(tools)
 
-.PHONY: default clean submit vnemu
+vam:
+	@$(addprefix $(V_AM)/, libs/klib)
+	@$(addprefix $(V_AM)/, am)
+	@$(addprefix $(V_AM)/, apps)
+	@$(V_AM)  #(tools)
+
+.PHONY: default clean submit vnemu vam
