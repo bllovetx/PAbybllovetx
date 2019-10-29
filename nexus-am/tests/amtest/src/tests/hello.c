@@ -9,6 +9,6 @@ void hello() {
     putstr("Hello, AM World @ " __ISA__ "\n");
   }
   for (int i = 0; i < 10; i ++) {
-    printf("Hello, BLLOVETX World!");
+    printf("Hello, BLLOVETX World!\n");
   }
 }
