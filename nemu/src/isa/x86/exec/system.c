@@ -48,7 +48,15 @@ make_EHelper(in) {
 }
 
 make_EHelper(out) {
-  TODO();
+  //TODO();
+  // split cpu interface & device interface
+  // using pio_read/write_common can also work
+  switch(id_src->width){
+    case 1 : pio_write_b(id_dest->val,id_src->val);break;
+    case 2 : pio_write_w(id_dest->val,id_src->val);break;
+    case 4 : pio_write_l(id_dest->val,id_src->val);break;
+    default: assert(0);
+  }
 
   print_asm_template2(out);
 }

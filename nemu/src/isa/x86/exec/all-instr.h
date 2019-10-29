@@ -12,6 +12,7 @@ make_EHelper(jmp_rm);
 make_EHelper(operand_size);
 
 /* instr-system */
+make_EHelper(out);
 
 /* instr-arith */
 make_EHelper(sub);
