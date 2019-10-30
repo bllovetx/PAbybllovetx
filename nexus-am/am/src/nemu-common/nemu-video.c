@@ -47,7 +47,7 @@ void __am_vga_init() {
   int choose, colorinit = 0xa61b29;
   for (int i = 0; i < size; i ++) {
     switch((i/(SCREEN_W*3000)%3)) {
-      case 0: choose = 1 ;break;
+      case 0: choose = 0 ;break;
       case 1: choose = 1 << 8 ;break;
       case 2: choose = 1 << 16;break;
     }
