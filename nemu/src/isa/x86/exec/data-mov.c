@@ -64,10 +64,19 @@ make_EHelper(cltd) {
 
 make_EHelper(cwtl) {
   if (decinfo.isa.is_operand_size_16) {
-    TODO();
+    //TODO();
+    // AX <- signed extend(AL)
+    rtl_lr(&s0,R_AL,1);
+    rtl_sext(&s1,&s0,1);
+    rtl_andi(&s1,&s1,0xffff);
+    rtl_sr(R_AX,&s1,2);
   }
   else {
-    TODO();
+    //TODO();
+    // EAX <- signed extend(AX)
+    rtl_lr(&s0,R_AX,2);
+    rtl_sext(&s1,&s0,2);
+    rtl_sr(R_EAX,&s1,4);
   }
 
   print_asm(decinfo.isa.is_operand_size_16 ? "cbtw" : "cwtl");

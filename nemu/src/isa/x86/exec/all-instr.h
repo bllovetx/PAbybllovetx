@@ -39,6 +39,7 @@ make_EHelper(movzx);
 make_EHelper(movsx);
 make_EHelper(leave);
 make_EHelper(cltd);
+make_EHelper(cwtl);
 
 /* instr-logic */
 make_EHelper(xor);
