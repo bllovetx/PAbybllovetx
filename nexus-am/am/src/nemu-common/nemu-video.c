@@ -44,7 +44,7 @@ void __am_vga_init() {
 
   int size = screen_width() * screen_height();
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  int colorinit = 0xf8f4ed;
+  int colorinit = 0xb89485;
   for (int i = 0; i < size; i ++) {
     fb[i] = colorinit;
   }
