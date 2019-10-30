@@ -85,3 +85,21 @@ make_EHelper(not) {
 
   print_asm_template1(not);
 }
+
+/* additional instr 
+** --first occur
+**   in microbench/md5
+*/
+
+/* rotate left without CF */
+make_EHelper(rol) {
+  if(id_dest->width!=4)assert( id_src->val < (id_dest->width*8) );
+  s0=(8*id_dest->width)-id_src->val;
+  rtl_shl(&s1,&id_dest->val,&id_src->val);
+  rtl_shr(&s2,&id_dest->val,&s0);
+  rtl_add(&s1,&s1,&s2);
+  rtl_andi(&s1,&s1,  0xffffffffu >> ((4 - id_dest->width) * 8));
+  operand_write(id_dest,&s1);
+
+  print_asm_template2(rol);
+}
