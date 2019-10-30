@@ -46,10 +46,10 @@ void __am_vga_init() {
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   int choose, colorinit = 0xa61b29;
   for (int i = 0; i < size; i ++) {
-    switch((i/SCREEN_W)%3) {
-      case 0: choose = 3 ;break;
-      case 1: choose = 3 << 8 ;break;
-      case 2: choose = 3 << 16;break;
+    switch((i/(SCREEN_W*4)%3)) {
+      case 0: choose = 1 ;break;
+      case 1: choose = 1 << 8 ;break;
+      case 2: choose = 1 << 16;break;
     }
     fb[i] = colorinit;
     colorinit +=choose;
