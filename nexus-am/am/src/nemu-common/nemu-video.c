@@ -28,7 +28,7 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
       int cplen = sizeof(uint32_t)*w;
       for(int i=0;i<h;i++){
         //assert(ctl->y+i<SCREEN_H);
-        memcpy((void *)(FB_ADDR+SCREEN_W*(y+i)+x),pixels,cplen);
+        memcpy((void *)(FB_ADDR+sizeof(uint32_t)*SCREEN_W*(y+i)+x),pixels,cplen);
         pixels += w;
       }
       if (ctl->sync) {
