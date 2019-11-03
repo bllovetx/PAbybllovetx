@@ -1,7 +1,8 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-//#define DEBUG
+volatile static int dummy;
+#define DEBUG
 //#define DIFF_TEST
 #define HAS_IOE
 
